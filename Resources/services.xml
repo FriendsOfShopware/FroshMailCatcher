@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="shyim_mail_catcher.view_dir">%shyim_mail_catcher.plugin_dir%/Resources/views</parameter>
+    </parameters>
+
+    <services>
+        <service id="mailtransport_factory" class="ShyimMailCatcher\Components\MailFactory">
+            <argument type="service" id="shyim_mail_catcher.components.database_mail_transport" />
+        </service>
+        <service id="shyim_mail_catcher.components.database_mail_transport" class="ShyimMailCatcher\Components\DatabaseMailTransport">
+            <argument type="service" id="dbal_connection" />
+        </service>
+    </services>
+</container>
