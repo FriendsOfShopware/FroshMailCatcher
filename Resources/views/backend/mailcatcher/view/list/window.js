@@ -13,7 +13,8 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Window', {
 
         me.items = [
             Ext.create('Shopware.apps.Mailcatcher.view.list.Mailgrid', {
-                flex: 1
+                flex: 1,
+                showId: me.showId
             }),
             Ext.create('Ext.container.Container', {
                 layout: 'fit',

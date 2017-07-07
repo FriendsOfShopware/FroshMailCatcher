@@ -5,16 +5,29 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Mailgrid', {
         var me = this;
 
         me.store = Ext.create('Shopware.apps.Mailcatcher.store.Mails');
+
+        if (me.showId) {
+            me.store.on('load', function () {
+                me.store.each(function (record) {
+                    if (parseInt(record.get('id')) === parseInt(me.showId)) {
+                        me.onClickMail(record);
+                    }
+                })
+            });
+        }
+
         me.columns = [
             {
                 text: 'Send-Date',
                 dataIndex: 'created',
-                flex: 1
-            },
-            {
-                text: 'From',
-                dataIndex: 'senderAddress',
-                flex: 1
+                flex: 1,
+                renderer: function (value, metaData, record) {
+                    if (value === Ext.undefined) {
+                        return value;
+                    }
+
+                    return Ext.util.Format.date(value) + ' ' + Ext.util.Format.date(value, timeFormat);
+                }
             },
             {
                 text: 'To',
@@ -27,12 +40,12 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Mailgrid', {
                 flex: 1.5
             },
             Ext.create('Ext.grid.column.Action', {
-                width:90,
-                items:[
+                width: 30,
+                items: [
                     {
                         iconCls: 'sprite-minus-circle-frame',
                         tooltip: 'Delete',
-                        handler:function (view, rowIndex, colIndex, item) {
+                        handler: function (view, rowIndex, colIndex, item) {
                             var store = view.getStore(),
                                 record = store.getAt(rowIndex);
                             store.remove(record);
@@ -44,28 +57,33 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Mailgrid', {
         ];
 
         me.pagingbar = me.getPagingBar();
-        me.dockedItems = [ me.pagingbar ];
+        me.dockedItems = [me.pagingbar];
 
         me.callParent(arguments);
 
         me.on('select', function (grid, record) {
-            var container = me.up('window').down('[itemId="mail-container"]');
-            container.removeAll();
-
-            container.add(Ext.create('Shopware.apps.Mailcatcher.view.list.Preview', {
-                record: record
-            }));
+            me.onClickMail(record);
         })
     },
 
+    onClickMail: function (record) {
+        var me = this;
+        var container = me.up('window').down('[itemId="mail-container"]');
+        container.removeAll();
 
-    getPagingBar:function () {
+        container.add(Ext.create('Shopware.apps.Mailcatcher.view.list.Preview', {
+            record: record
+        }));
+    },
+
+
+    getPagingBar: function () {
         var me = this;
 
         return Ext.create('Ext.toolbar.Paging', {
             store: me.store,
-            dock:'bottom',
-            displayInfo:true
+            dock: 'bottom',
+            displayInfo: true
         });
 
     },
