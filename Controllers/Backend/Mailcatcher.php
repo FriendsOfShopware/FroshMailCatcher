@@ -6,6 +6,7 @@ use ShyimMailCatcher\Models\Mails;
  * Class Shopware_Controllers_Backend_Mailcatcher
  */
 class Shopware_Controllers_Backend_Mailcatcher extends Shopware_Controllers_Backend_Application {
+
     /**
      * @var string
      */
@@ -34,5 +35,13 @@ class Shopware_Controllers_Backend_Mailcatcher extends Shopware_Controllers_Back
         $this->View()->success = true;
         $mails = $this->container->get('dbal_connection')->fetchAll('SELECT id, subject, receiverAddress FROM s_plugin_mailcatcher WHERE id > :id ORDER BY id ASC', ['id' => $this->Request()->getParam('id')]);
         $this->View()->mails = $mails;
+    }
+
+    /**
+     * Clear all entries in mailbox
+     */
+    public function clearAction()
+    {
+        $this->container->get('dbal_connection')->executeQuery('TRUNCATE TABLE s_plugin_mailcatcher');
     }
 }

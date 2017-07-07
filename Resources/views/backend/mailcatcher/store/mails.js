@@ -4,6 +4,7 @@ Ext.define('Shopware.apps.Mailcatcher.store.Mails', {
 
     autoLoad: true,
     remoteSort: true,
+    remoteFilter: true,
 
     sorters: [{
         property: 'created',

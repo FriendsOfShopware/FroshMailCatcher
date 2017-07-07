@@ -57,7 +57,8 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Mailgrid', {
         ];
 
         me.pagingbar = me.getPagingBar();
-        me.dockedItems = [me.pagingbar];
+        me.toolbar = me.getToolbar();
+        me.dockedItems = [me.pagingbar, me.toolbar];
 
         me.callParent(arguments);
 
@@ -87,4 +88,59 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Mailgrid', {
         });
 
     },
+
+    getToolbar: function () {
+        var me = this;
+
+        me.toolbar = Ext.create('Ext.toolbar.Toolbar', {
+            dock: 'top',
+            ui: 'shopware-ui',
+            items: me.createToolbarItems()
+        });
+
+        return me.toolbar;
+    },
+
+    createToolbarItems: function () {
+        var me = this, items = [];
+
+        items.push(Ext.create('Ext.button.Button', {
+            text: 'Clear mailbox',
+            iconCls: 'sprite-minus-circle-frame',
+            handler: function () {
+                Ext.Ajax.request({
+                    url: '{url action=clear}',
+                    success: function (response) {
+                        me.store.load();
+                    }
+                });
+            }
+        }));
+
+        items.push('->');
+
+        items.push(Ext.create('Ext.form.field.Text', {
+            cls: 'searchfield',
+            width: 170,
+            emptyText: 'Search',
+            enableKeyEvents: true,
+            checkChangeBuffer: 500,
+            listeners: {
+                change: function (field, value) {
+                    if (value.length === 0) {
+                        me.store.clearFilter();
+                    } else {
+                        me.store.clearFilter(true);
+                        me.store.filter({
+                            property: 'search',
+                            value: value
+                        });
+                    }
+                    console.log(value);
+                }
+            }
+        }));
+
+        return items;
+    }
 });
