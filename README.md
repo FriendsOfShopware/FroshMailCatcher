@@ -24,4 +24,5 @@ No configuration required, default configuration will be ignored while plugin is
 
 ## Images
 
-![Mail-Catcher UI](http://i.imgur.com/48SZuxl.png)
+![Mail-Catcher UI](http://i.imgur.com/yCEgX0G.png)
+![Notification](http://i.imgur.com/38pNzoT.png)
