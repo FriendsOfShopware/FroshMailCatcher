@@ -1,0 +1,13 @@
+{
+  "name": "shyim/shopware-mailcatcher",
+  "keywords": ["shopware", "mailcatcher", "plugin"],
+  "description": "Integrated mailcatcher",
+  "license": "MIT",
+  "type": "shopware-plugin",
+  "extra": {
+    "installer-name": "ShyimMailCatcher"
+  },
+  "require": {
+    "composer/installers": "~1.0"
+  }
+}
