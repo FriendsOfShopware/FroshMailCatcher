@@ -1,5 +1,6 @@
 Ext.define('Shopware.apps.Mailcatcher.view.list.Preview', {
     extend: 'Ext.container.Container',
+    autoScroll: true,
 
     initComponent: function () {
         var me = this,
@@ -11,7 +12,6 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Preview', {
                 title: 'Html',
                 padding: 10,
                 height: '100%',
-                autoScroll: true,
                 html: '<div style="margin: 15px">' + me.record.raw.bodyHtml + '</div>',
                 disabled: me.record.raw.bodyHtml === null
             });
@@ -23,7 +23,6 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Preview', {
                 title: 'Text',
                 padding: 10,
                 height: '100%',
-                autoScroll: true,
                 html: '<div style="margin:15px"><pre>' + me.record.raw.bodyText + '</pre></div>',
                 disabled: me.record.raw.bodyText === null
             });
