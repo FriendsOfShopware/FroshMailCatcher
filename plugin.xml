@@ -15,4 +15,11 @@
             ]]>
         </changes>
     </changelog>
+    <changelog version="1.0.1">
+        <changes lang="en">
+            <![CDATA[
+                Fixed scrolling
+            ]]>
+        </changes>
+    </changelog>
 </plugin>
