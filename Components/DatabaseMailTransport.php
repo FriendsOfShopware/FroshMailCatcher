@@ -40,7 +40,7 @@ class DatabaseMailTransport extends \Zend_Mail_Transport_Abstract
             'created' => date('Y-m-d H:i:s'),
             'senderAddress' => $this->_mail->getFrom(),
             'receiverAddress' => implode(',', $this->_mail->getRecipients()),
-            'subject' => $this->_mail->getSubject(),
+            'subject' => iconv_mime_decode($this->_mail->getSubject()),
             'bodyText' => $this->_mail->getPlainBodyText(),
             'bodyHtml' => $this->_mail->getPlainBody()
         ]);
