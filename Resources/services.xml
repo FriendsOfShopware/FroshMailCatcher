@@ -20,5 +20,10 @@
             <argument type="string">%shyim_mail_catcher.view_dir%</argument>
             <tag name="shopware.event_subscriber"/>
         </service>
+
+        <service id="shyim_mail_catcher.subscriber.controller_subscriber" class="ShyimMailCatcher\Subscriber\ControllerPathSubscriber">
+            <argument type="string">%shyim_mail_catcher.plugin_dir%</argument>
+            <tag name="shopware.event_subscriber"/>
+        </service>
     </services>
 </container>
