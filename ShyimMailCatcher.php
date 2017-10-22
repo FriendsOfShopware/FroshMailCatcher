@@ -5,6 +5,8 @@ namespace ShyimMailCatcher;
 use Doctrine\ORM\Tools\SchemaTool;
 use Shopware\Components\Plugin;
 use Shopware\Components\Plugin\Context\InstallContext;
+use Shopware\Components\Plugin\Context\UpdateContext;
+use ShyimMailCatcher\Models\Attachment;
 use ShyimMailCatcher\Models\Mails;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -19,12 +21,15 @@ class ShyimMailCatcher extends Plugin
      */
     public function install(InstallContext $context)
     {
-        parent::install($context);
+        $this->updateDatabase();
+    }
 
-        $tool = new SchemaTool($this->container->get('models'));
-        $tool->createSchema([
-            $this->container->get('models')->getClassMetadata(Mails::class)
-        ]);
+    /**
+     * @param UpdateContext $context
+     */
+    public function update(UpdateContext $context)
+    {
+        $this->updateDatabase();
     }
 
     /**
@@ -34,5 +39,14 @@ class ShyimMailCatcher extends Plugin
     {
         parent::build($container);
         $container->setParameter('shyim_mail_catcher.plugin_dir', $this->getPath());
+    }
+
+    private function updateDatabase()
+    {
+        $tool = new SchemaTool($this->container->get('models'));
+        $tool->updateSchema([
+            $this->container->get('models')->getClassMetadata(Mails::class),
+            $this->container->get('models')->getClassMetadata(Attachment::class),
+        ], true);
     }
 }

@@ -36,6 +36,21 @@ class DatabaseMailTransport extends \Zend_Mail_Transport_Abstract
      */
     protected function _sendMail()
     {
+        $attachments = [];
+        if ($this->_mail->hasAttachments) {
+            $parts = $this->_mail->getParts();
+
+            /** @var \Zend_Mime_Part $part */
+            foreach ($parts as $part) {
+                if ($part->disposition === 'attachment') {
+                    $attachments[] = [
+                        'file_name' => $part->filename,
+                        'content' => $part->getContent()
+                    ];
+                }
+            }
+        }
+
         $this->connection->insert('s_plugin_mailcatcher', [
             'created' => date('Y-m-d H:i:s'),
             'senderAddress' => $this->_mail->getFrom(),
@@ -44,5 +59,11 @@ class DatabaseMailTransport extends \Zend_Mail_Transport_Abstract
             'bodyText' => $this->_mail->getPlainBodyText(),
             'bodyHtml' => $this->_mail->getPlainBody()
         ]);
+
+        $insertId = $this->connection->lastInsertId();
+        foreach ($attachments as $attachment) {
+            $attachment['mail_id'] = $insertId;
+            $this->connection->insert('s_plugin_mailcatcher_attachments', $attachment);
+        }
     }
 }

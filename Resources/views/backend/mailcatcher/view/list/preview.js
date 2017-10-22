@@ -28,6 +28,9 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Preview', {
             });
         }
 
+        items.push(Ext.create('Shopware.apps.Mailcatcher.view.list.Attachment', {
+            mailId: me.record.raw.id
+        }));
 
         me.items = {
             xtype: 'tabpanel',

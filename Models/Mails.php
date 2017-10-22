@@ -3,6 +3,7 @@
 namespace ShyimMailCatcher\Models;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Shopware\Components\Model\ModelEntity;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -56,6 +57,23 @@ class Mails extends ModelEntity
      * @ORM\Column(name="bodyHtml", type="text", nullable=true)
      */
     private $bodyHtml;
+
+    /**
+     * INVERSE SIDE
+     *
+     * @ORM\OneToMany(targetEntity="ShyimMailCatcher\Models\Attachment", mappedBy="mail", orphanRemoval=true, cascade={"persist"})
+     *
+     * @var ArrayCollection
+     */
+    protected $attachments;
+
+    /**
+     * Mails constructor.
+     */
+    public function __construct()
+    {
+        $this->attachments = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -167,5 +185,21 @@ class Mails extends ModelEntity
     public function setBodyHtml($bodyHtml)
     {
         $this->bodyHtml = $bodyHtml;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * @param array $attachments
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
     }
 }

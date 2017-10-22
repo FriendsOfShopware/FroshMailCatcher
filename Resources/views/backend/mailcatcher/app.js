@@ -14,8 +14,8 @@ Ext.define('Shopware.apps.Mailcatcher', {
         'list.Window'
     ],
 
-    models: [ 'Mails' ],
-    stores: [ 'Mails' ],
+    models: [ 'Mails', 'Attachment' ],
+    stores: [ 'Mails', 'Attachment' ],
 
     launch: function() {
         return this.getController('Main').mainWindow;

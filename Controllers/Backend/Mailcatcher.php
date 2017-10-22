@@ -1,11 +1,13 @@
 <?php
 
+use Doctrine\ORM\AbstractQuery;
+use ShyimMailCatcher\Models\Attachment;
 use ShyimMailCatcher\Models\Mails;
 
 /**
  * Class Shopware_Controllers_Backend_Mailcatcher
  */
-class Shopware_Controllers_Backend_Mailcatcher extends Shopware_Controllers_Backend_Application {
+class Shopware_Controllers_Backend_Mailcatcher extends Shopware_Controllers_Backend_Application implements \Shopware\Components\CSRFWhitelistAware {
 
     /**
      * @var string
@@ -38,10 +40,59 @@ class Shopware_Controllers_Backend_Mailcatcher extends Shopware_Controllers_Back
     }
 
     /**
+     * Attachment list
+     */
+    public function getAttachmentsAction()
+    {
+        $mailId = $this->Request()->getParam('mailId');
+
+        $qb = $this->getModelManager()->createQueryBuilder();
+        $result = $qb->from(Attachment::class, 'attachment')
+            ->select(['attachment.id', 'attachment.fileName'])
+            ->where('attachment.mail = :mailId')
+            ->setParameter('mailId', $mailId)
+            ->getQuery()
+            ->setHydrationMode(AbstractQuery::HYDRATE_ARRAY)
+            ->execute();
+
+        $this->View()->success = true;
+        $this->View()->data = $result;
+        $this->View()->total = count($result);
+    }
+
+    /**
+     * Download a attachment
+     */
+    public function downloadAttachmentAction()
+    {
+        $attachmentId = $this->Request()->getParam('id');
+        $attachment = $this->getModelManager()->find(Attachment::class, $attachmentId);
+
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . $attachment->getFileName() . '"');
+
+        echo base64_decode($attachment->getContent());
+        exit();
+    }
+
+    /**
      * Clear all entries in mailbox
      */
     public function clearAction()
     {
+        $this->container->get('dbal_connection')->executeQuery('SET FOREIGN_KEY_CHECKS = 0');
+        $this->container->get('dbal_connection')->executeQuery('TRUNCATE TABLE s_plugin_mailcatcher_attachments');
         $this->container->get('dbal_connection')->executeQuery('TRUNCATE TABLE s_plugin_mailcatcher');
+        $this->container->get('dbal_connection')->executeQuery('SET FOREIGN_KEY_CHECKS = 1');
+    }
+
+    /**
+     * Returns a list with actions which should not be validated for CSRF protection
+     *
+     * @return string[]
+     */
+    public function getWhitelistedCSRFActions()
+    {
+        return ['downloadAttachment'];
     }
 }
