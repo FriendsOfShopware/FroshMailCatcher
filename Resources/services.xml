@@ -5,24 +5,24 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="shyim_mail_catcher.view_dir">%shyim_mail_catcher.plugin_dir%/Resources/views</parameter>
+        <parameter key="frosh_mail_catcher.view_dir">%frosh_mail_catcher.plugin_dir%/Resources/views</parameter>
     </parameters>
 
     <services>
-        <service id="mailtransport_factory" class="ShyimMailCatcher\Components\MailFactory">
-            <argument type="service" id="shyim_mail_catcher.components.database_mail_transport" />
+        <service id="mailtransport_factory" class="FroshMailCatcher\Components\MailFactory">
+            <argument type="service" id="frosh_mail_catcher.components.database_mail_transport" />
         </service>
-        <service id="shyim_mail_catcher.components.database_mail_transport" class="ShyimMailCatcher\Components\DatabaseMailTransport">
+        <service id="frosh_mail_catcher.components.database_mail_transport" class="FroshMailCatcher\Components\DatabaseMailTransport">
             <argument type="service" id="dbal_connection" />
         </service>
 
-        <service id="shyim_mail_catcher.subscriber.backend_subscriber" class="ShyimMailCatcher\Subscriber\BackendSubscriber">
-            <argument type="string">%shyim_mail_catcher.view_dir%</argument>
+        <service id="frosh_mail_catcher.subscriber.backend_subscriber" class="FroshMailCatcher\Subscriber\BackendSubscriber">
+            <argument type="string">%frosh_mail_catcher.view_dir%</argument>
             <tag name="shopware.event_subscriber"/>
         </service>
 
-        <service id="shyim_mail_catcher.subscriber.controller_subscriber" class="ShyimMailCatcher\Subscriber\ControllerPathSubscriber">
-            <argument type="string">%shyim_mail_catcher.plugin_dir%</argument>
+        <service id="frosh_mail_catcher.subscriber.controller_subscriber" class="FroshMailCatcher\Subscriber\ControllerPathSubscriber">
+            <argument type="string">%frosh_mail_catcher.plugin_dir%</argument>
             <tag name="shopware.event_subscriber"/>
         </service>
     </services>

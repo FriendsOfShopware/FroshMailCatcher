@@ -6,11 +6,11 @@ Integrated easy to use mailcatcher for development or staging environments
 
 ## Zip Installation package for the Shopware Plugin Manager
 
-* Download the [latest plugin version](https://github.com/shyim/ShyimMailCatcher/releases/latest/)
+* Download the [latest plugin version](https://github.com/shyim/FroshMailCatcher/releases/latest/)
 * Upload and install plugin using Plugin Manager
 
 ## Git Version
-* Checkout Plugin in `/custom/plugins/ShyimMailCatcher`
+* Checkout Plugin in `/custom/plugins/FroshMailCatcher`
 * Install the Plugin with the Plugin Manager
 
 ## Install with composer

@@ -1,9 +1,9 @@
 <?php
 
-namespace ShyimMailCatcher\Models;
+namespace FroshMailCatcher\Models;
 
-use Shopware\Components\Model\ModelEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Shopware\Components\Model\ModelEntity;
 
 /**
  * @ORM\Table(name="s_plugin_mailcatcher_attachments")
@@ -12,6 +12,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Attachment extends ModelEntity
 {
     /**
+     * OWNING SIDE
+     *
+     * @var Mails
+     *
+     * @ORM\ManyToOne(targetEntity="FroshMailCatcher\Models\Mails")
+     * @ORM\JoinColumn(name="mail_id", referencedColumnName="id")
+     */
+    protected $mail;
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
@@ -19,16 +28,6 @@ class Attachment extends ModelEntity
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * OWNING SIDE
-     *
-     * @var Mails
-     *
-     * @ORM\ManyToOne(targetEntity="ShyimMailCatcher\Models\Mails")
-     * @ORM\JoinColumn(name="mail_id", referencedColumnName="id")
-     */
-    protected $mail;
 
     /**
      * @ORM\Column(name="file_name", type="string", nullable=false)

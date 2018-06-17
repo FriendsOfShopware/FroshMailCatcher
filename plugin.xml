@@ -3,11 +3,11 @@
         xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">Mail Catcher</label>
     <label lang="en">Mail Catcher</label>
-    <version>1.1.0</version>
-    <copyright>Shyim</copyright>
+    <version>1.2.0</version>
+    <copyright>Friends of Shopware</copyright>
     <license>MIT</license>
-    <link>https://github.com/shyim/ShyimMailCatcher</link>
-    <author>Shyim</author>
+    <link>https://github.com/FriendsOfShopware/FroshMailCatcher</link>
+    <author>Friends of Shopware</author>
     <changelog version="1.0.0">
         <changes lang="en">
             <![CDATA[
@@ -26,6 +26,13 @@
         <changes lang="en">
             <![CDATA[
                 Attachment Support
+            ]]>
+        </changes>
+    </changelog>
+    <changelog version="1.2.0">
+        <changes lang="en">
+            <![CDATA[
+                Now part of Frosh community!
             ]]>
         </changes>
     </changelog>

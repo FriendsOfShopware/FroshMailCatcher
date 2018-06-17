@@ -1,20 +1,19 @@
 <?php
 
-namespace ShyimMailCatcher;
+namespace FroshMailCatcher;
 
 use Doctrine\ORM\Tools\SchemaTool;
+use FroshMailCatcher\Models\Attachment;
+use FroshMailCatcher\Models\Mails;
 use Shopware\Components\Plugin;
 use Shopware\Components\Plugin\Context\InstallContext;
 use Shopware\Components\Plugin\Context\UpdateContext;
-use ShyimMailCatcher\Models\Attachment;
-use ShyimMailCatcher\Models\Mails;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * Class ShyimMailCatcher
- * @package ShyimMailCatcher
+ * Class FroshMailCatcher
  */
-class ShyimMailCatcher extends Plugin
+class FroshMailCatcher extends Plugin
 {
     /**
      * @param InstallContext $context
@@ -38,7 +37,7 @@ class ShyimMailCatcher extends Plugin
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
-        $container->setParameter('shyim_mail_catcher.plugin_dir', $this->getPath());
+        $container->setParameter('frosh_mail_catcher.plugin_dir', $this->getPath());
     }
 
     private function updateDatabase()

@@ -1,11 +1,11 @@
 <?php
 
-namespace ShyimMailCatcher\Models;
+namespace FroshMailCatcher\Models;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Shopware\Components\Model\ModelEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Shopware\Components\Model\ModelEntity;
 
 /**
  * @ORM\Table(name="s_plugin_mailcatcher")
@@ -13,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Mails extends ModelEntity
 {
+    /**
+     * INVERSE SIDE
+     *
+     * @ORM\OneToMany(targetEntity="FroshMailCatcher\Models\Attachment", mappedBy="mail", orphanRemoval=true, cascade={"persist"})
+     *
+     * @var ArrayCollection
+     */
+    protected $attachments;
     /**
      * @var int
      *
@@ -57,15 +65,6 @@ class Mails extends ModelEntity
      * @ORM\Column(name="bodyHtml", type="text", nullable=true)
      */
     private $bodyHtml;
-
-    /**
-     * INVERSE SIDE
-     *
-     * @ORM\OneToMany(targetEntity="ShyimMailCatcher\Models\Attachment", mappedBy="mail", orphanRemoval=true, cascade={"persist"})
-     *
-     * @var ArrayCollection
-     */
-    protected $attachments;
 
     /**
      * Mails constructor.

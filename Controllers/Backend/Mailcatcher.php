@@ -1,14 +1,14 @@
 <?php
 
 use Doctrine\ORM\AbstractQuery;
-use ShyimMailCatcher\Models\Attachment;
-use ShyimMailCatcher\Models\Mails;
+use FroshMailCatcher\Models\Attachment;
+use FroshMailCatcher\Models\Mails;
 
 /**
  * Class Shopware_Controllers_Backend_Mailcatcher
  */
-class Shopware_Controllers_Backend_Mailcatcher extends Shopware_Controllers_Backend_Application implements \Shopware\Components\CSRFWhitelistAware {
-
+class Shopware_Controllers_Backend_Mailcatcher extends Shopware_Controllers_Backend_Application implements \Shopware\Components\CSRFWhitelistAware
+{
     /**
      * @var string
      */
@@ -17,7 +17,7 @@ class Shopware_Controllers_Backend_Mailcatcher extends Shopware_Controllers_Back
     public function preDispatch()
     {
         parent::preDispatch();
-        $this->View()->addTemplateDir($this->container->getParameter('shyim_mail_catcher.view_dir'));
+        $this->View()->addTemplateDir($this->container->getParameter('frosh_mail_catcher.view_dir'));
     }
 
     /**

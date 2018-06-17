@@ -1,10 +1,9 @@
 <?php
 
-namespace ShyimMailCatcher\Components;
+namespace FroshMailCatcher\Components;
 
 /**
  * Class MailFactory
- * @package ShyimMailCatcher\Components
  */
 class MailFactory
 {
@@ -13,7 +12,7 @@ class MailFactory
      */
     public static function factory()
     {
-        $transport = Shopware()->Container()->get('shyim_mail_catcher.components.database_mail_transport');
+        $transport = Shopware()->Container()->get('frosh_mail_catcher.components.database_mail_transport');
 
         \Enlight_Components_Mail::setDefaultTransport($transport);
 

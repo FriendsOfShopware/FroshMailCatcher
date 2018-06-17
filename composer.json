@@ -1,11 +1,11 @@
 {
-  "name": "shyim/shopware-mailcatcher",
+  "name": "frosh/mail-catcher",
   "keywords": ["shopware", "mailcatcher", "plugin"],
   "description": "Integrated mailcatcher",
   "license": "MIT",
   "type": "shopware-plugin",
   "extra": {
-    "installer-name": "ShyimMailCatcher"
+    "installer-name": "FroshMailCatcher"
   },
   "require": {
     "composer/installers": "~1.0"
