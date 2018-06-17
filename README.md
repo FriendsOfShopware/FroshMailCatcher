@@ -1,22 +1,28 @@
 # Simple MailCatcher for Shopware
 
+[![Join the chat at https://gitter.im/FriendsOfShopware/Lobby](https://badges.gitter.im/FriendsOfShopware/Lobby.svg)](https://gitter.im/FriendsOfShopware/Lobby)
+
 Integrated easy to use mailcatcher for development or staging environments
 
-# Installation
+## Requirements
 
-## Zip Installation package for the Shopware Plugin Manager
+- min Shopware 5.2.0
 
-* Download the [latest plugin version](https://github.com/shyim/FroshMailCatcher/releases/latest/)
+
+## Installation
+
+### Zip Installation package for the Shopware Plugin Manager
+
+* Download the [latest plugin version](https://github.com/FriendsOfShopware/FroshMailCatcher/releases/latest/)
 * Upload and install plugin using Plugin Manager
 
-## Git Version
+### Git Version
 * Checkout Plugin in `/custom/plugins/FroshMailCatcher`
 * Install the Plugin with the Plugin Manager
 
-## Install with composer
+### Install with composer
 * Change to your root Installation of shopware
-* Run command `composer require shyim/shopware-mailcatcher` and install and active plugin with Plugin Manager 
-
+* Run command `composer require frosh/mail-catcher` and install and active plugin with Plugin Manager 
 
 ## Configuration
 
@@ -26,3 +32,11 @@ No configuration required, default configuration will be ignored while plugin is
 
 ![Mail-Catcher UI](http://i.imgur.com/yCEgX0G.png)
 ![Notification](http://i.imgur.com/38pNzoT.png)
+
+## Contributing
+
+Feel free to fork and send pull requests!
+
+## Licence
+
+This project uses the [MIT License](LICENCE.md).
