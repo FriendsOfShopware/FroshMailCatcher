@@ -9,11 +9,11 @@ if [ -z ${commit} ]; then
 fi
 
 # Remove old release
-rm -rf FroshMailCatcher FroshMailCatcher-*.zip
+rm -rf ${PLUGIN_NAME} ${PLUGIN_NAME}*.zip
 
 # Build new release
-mkdir -p FroshMailCatcher
-git archive ${commit} | tar -x -C FroshMailCatcher
-composer install --no-dev -n -o -d FroshMailCatcher
-( find ./FroshMailCatcher -type d -name ".git" && find ./FroshMailCatcher -name ".gitignore" && find ./FroshMailCatcher -name ".gitmodules" ) | xargs rm -r
-zip -r FroshMailCatcher-${commit}.zip FroshMailCatcher
+mkdir -p ${PLUGIN_NAME}
+git archive ${commit} | tar -x -C ${PLUGIN_NAME}
+composer install --no-dev -n -o -d ${PLUGIN_NAME}
+( find ./${PLUGIN_NAME} -type d -name ".git" && find ./${PLUGIN_NAME} -name "build.sh" && find ./${PLUGIN_NAME} -name "*.md"  && find ./${PLUGIN_NAME} -name ".gitignore" && find ./${PLUGIN_NAME} -name ".gitmodules" ) | xargs rm -r
+zip -r ${PLUGIN_NAME}-${commit}.zip ${PLUGIN_NAME}

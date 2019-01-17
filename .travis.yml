@@ -1,0 +1,81 @@
+language: php
+php:
+- 7.1
+- 7.2
+sudo: false
+services:
+- mysql
+env:
+  matrix:
+  - SHOPWARE_VERSION="5.2"
+  - SHOPWARE_VERSION="5.3"
+  - SHOPWARE_VERSION="5.4"
+  - SHOPWARE_VERSION="5.5"
+  global:
+  - PLUGIN_NAME=FroshMailCatcher
+  - SHOPWARE_DIRECTORY="${HOME}/shopware"
+  - PLUGIN_DIRECTORY="${SHOPWARE_DIRECTORY}/custom/plugins"
+cache:
+  directories:
+  - "${HOME}/.composer/cache/files"
+install:
+- composer install
+before_script:
+- mysql -e 'CREATE DATABASE shopware;'
+- if [[ "$(php --version | grep -cim1 xdebug)" -ge 1 ]]; then phpenv config-rm xdebug.ini;
+  fi
+- git clone https://github.com/shopware/shopware.git ${SHOPWARE_DIRECTORY} --branch
+  ${SHOPWARE_VERSION}
+- ant -f ${SHOPWARE_DIRECTORY}/build/build.xml -Dapp.host=localhost -Ddb.user=travis
+  -Ddb.host=127.0.0.1 -Ddb.name=shopware build-unit
+- mv ${TRAVIS_BUILD_DIR} ${PLUGIN_DIRECTORY}/${PLUGIN_NAME}
+- php ${HOME}/shopware/bin/console sw:plugin:refresh
+- php ${HOME}/shopware/bin/console sw:plugin:install ${PLUGIN_NAME}
+- php ${HOME}/shopware/bin/console sw:plugin:activate ${PLUGIN_NAME}
+- cd ${PLUGIN_DIRECTORY}/${PLUGIN_NAME}
+script:
+- 
+after_success:
+- ./build.sh $TRAVIS_TAG
+stages:
+- name: Store-Check
+  if: tag IS blank AND env(PLUGIN_ID) IS present AND type != pull_request
+- name: Store-Sync
+  if: branch = master AND env(PLUGIN_ID) IS present AND type != pull_request
+- name: Store-Deploy
+  if: tag IS present
+jobs:
+  include:
+    - stage: Store-Check
+      php: 7.3
+      before_script: skip
+      install:
+        - ./build.sh master
+        - wget 'https://github.com/FriendsOfShopware/FroshPluginUploader/blob/master/frosh-plugin-upload.phar?raw=true' -O frosh-plugin-upload.phar
+      script:
+        - php frosh-plugin-upload.phar plugin:validate ${TRAVIS_BUILD_DIR}/${PLUGIN_NAME}*.zip
+    - stage: Store-Sync
+      before_script: skip
+      php: 7.3
+      install:
+        - wget 'https://github.com/FriendsOfShopware/FroshPluginUploader/blob/master/frosh-plugin-upload.phar?raw=true' -O frosh-plugin-upload.phar
+      script:
+        - php frosh-plugin-upload.phar plugin:update ${TRAVIS_BUILD_DIR}/Resources/store
+    - stage: Store-Deploy
+      before_script: skip
+      php: 7.3
+      install:
+        - wget 'https://github.com/FriendsOfShopware/FroshPluginUploader/blob/master/frosh-plugin-upload.phar?raw=true' -O frosh-plugin-upload.phar
+      script:
+        - ./build.sh
+        - php frosh-plugin-upload.phar plugin:upload ${TRAVIS_BUILD_DIR}/${PLUGIN_NAME}*.zip
+deploy:
+  provider: releases
+  api_key:
+    secure: na6T+fqoT9AQuAvk/eCsIhov/TnC5XeAINTSV8DFt+3cbG1i9jzQ1mKSV+IqpRIea0hLKSbwqn7jMpb1MCunl4MBCm4kWMtt/AsKCuVnkgVw2+3N5sipaf6OO08VhlZom3aetamTHzdB5tsP7jnf+IAXg0Ge+lSGbIEhHbUGle57n28YPfD/dQSIoHBo5V9nNRrRW1ikz9oWEDAK6Q3VooOJ9wTP8/QS9xHMvfm22H9VlI/gUODvsvt90Gcv720mmOvC3dcElwFLOWuCPCg7w9aWKzhRNHU4XqhHHMZG9BiaoOfaKz6lSYwoVbZ16/s1c7kEApov9y4CRamgk+C+/V8xsDn0hL96EEe9ccqBL7/8n9kI74mRu0B63J1+E8cmxDE3VhuWi9Yflr9P0BeqqTrSbA7InMNyUrGLXflVeUqas2OrVvySGIPDkpeozDDONsqOPsUAT+Q4Pq1tbGYtxZNcevzkQ99LtgwUDFr6Ku/PHW85IYzs2KP18ggIgpj3BdgdJckiADKLxeKUE0M6ZL88DRW0jPPlUsT+ZvrlBcaxLXDmYZkpvV3h8VFCrVthgX+v0jMCHNnOKO+CwXJrpZ2HOXX88lMZsNSRbjCNrEWW+pdlYLwuVP7Jac7oFBugQPkTQ7TApLG6UrjKnKQrnhAcrgwpK4gpcjl9JEA5qnw=
+  file_glob: true
+  file: $PLUGIN_NAME*.zip
+  skip_cleanup: true
+  on:
+    repo: FriendsOfShopware/FroshMailCatcher
+    tags: true

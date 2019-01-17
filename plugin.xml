@@ -8,6 +8,7 @@
     <license>MIT</license>
     <link>https://github.com/FriendsOfShopware/FroshMailCatcher</link>
     <author>Friends of Shopware</author>
+    <compatibility minVersion="5.2.0" />
     <changelog version="1.0.0">
         <changes lang="en">
             <![CDATA[
