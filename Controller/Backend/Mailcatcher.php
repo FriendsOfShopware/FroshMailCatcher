@@ -1,5 +1,9 @@
 <?php
 
+
+namespace FroshMailCatcher\Controller\Backend;
+
+use Shopware_Controllers_Backend_Application;
 use Doctrine\ORM\AbstractQuery;
 use FroshMailCatcher\Models\Attachment;
 use FroshMailCatcher\Models\Mails;
@@ -7,7 +11,7 @@ use FroshMailCatcher\Models\Mails;
 /**
  * Class Shopware_Controllers_Backend_Mailcatcher
  */
-class Shopware_Controllers_Backend_Mailcatcher extends Shopware_Controllers_Backend_Application implements \Shopware\Components\CSRFWhitelistAware
+class Mailcatcher extends Shopware_Controllers_Backend_Application implements \Shopware\Components\CSRFWhitelistAware
 {
     /**
      * @var string

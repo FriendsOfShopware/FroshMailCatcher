@@ -25,5 +25,9 @@
             <argument type="string">%frosh_mail_catcher.plugin_dir%</argument>
             <tag name="shopware.event_subscriber"/>
         </service>
+
+        <service id="FroshMailCatcher\Controller\Backend\Mailcatcher">
+            <tag name="shopware.controller" module="backend" controller="mailcatcher"/>
+        </service>
     </services>
 </container>
