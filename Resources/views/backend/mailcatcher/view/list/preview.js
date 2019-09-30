@@ -24,7 +24,7 @@ Ext.define('Shopware.apps.Mailcatcher.view.list.Preview', {
                 title: 'Text',
                 padding: 25,
                 height: '100%',
-                html: '<pre style="white-space: pre-wrap">' + me.escapeHtml(me.record.raw.bodyText) + '</pre>',
+                html: '<div style="height:100%;overflow-y:auto"><pre style="white-space: pre-wrap">' + me.escapeHtml(me.record.raw.bodyText) + '</pre></div>',
                 disabled: me.record.raw.bodyText === null
             });
         }
