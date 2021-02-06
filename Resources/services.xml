@@ -12,7 +12,7 @@
         <service id="mailtransport_factory" class="FroshMailCatcher\Components\MailFactory">
             <argument type="service" id="frosh_mail_catcher.components.database_mail_transport" />
         </service>
-        <service id="frosh_mail_catcher.components.database_mail_transport" class="FroshMailCatcher\Components\DatabaseMailTransport">
+        <service id="frosh_mail_catcher.components.database_mail_transport" class="FroshMailCatcher\Components\DatabaseMailTransport" public="true">
             <argument type="service" id="dbal_connection" />
         </service>
 
