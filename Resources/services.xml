@@ -9,6 +9,7 @@
     </parameters>
 
     <services>
+        <defaults public="true"/>
         <service id="mailtransport_factory" class="FroshMailCatcher\Components\MailFactory">
             <argument type="service" id="frosh_mail_catcher.components.database_mail_transport" />
         </service>
