@@ -3,7 +3,7 @@
         xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
     <label lang="de">Mail Catcher</label>
     <label lang="en">Mail Catcher</label>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <copyright>Friends of Shopware</copyright>
     <license>MIT</license>
     <link>https://github.com/FriendsOfShopware/FroshMailCatcher</link>
@@ -41,6 +41,13 @@
         <changes lang="en">
             <![CDATA[
                 Fix for Shopware 5.7
+            ]]>
+        </changes>
+    </changelog>
+    <changelog version="1.2.2">
+        <changes lang="en">
+            <![CDATA[
+                Improve usage of Zend_Mail
             ]]>
         </changes>
     </changelog>
