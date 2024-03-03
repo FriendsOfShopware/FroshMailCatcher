@@ -51,13 +51,15 @@ class DatabaseMailTransport extends \Zend_Mail_Transport_Abstract
             }
         }
 
+        $bodyPlainText = ($this->_mail->getBodyText() != false) ? $this->_mail->getBodyText()->getRawContent() : "";
+        $bodyHtml = ($this->_mail->getBodyHtml() != false) ? $this->_mail->getBodyHtml()->getRawContent() : ""; 
         $this->connection->insert('s_plugin_mailcatcher', [
             'created' => date('Y-m-d H:i:s'),
             'senderAddress' => $this->_mail->getFrom(),
             'receiverAddress' => implode(',', $this->_mail->getRecipients()),
             'subject' => iconv_mime_decode($this->_mail->getSubject()),
-            'bodyText' => $this->_mail->getPlainBodyText(),
-            'bodyHtml' => $this->_mail->getPlainBody(),
+            'bodyText' => $bodyPlainText,
+            'bodyHtml' => $bodyHtml,
         ]);
 
         $insertId = $this->connection->lastInsertId();
